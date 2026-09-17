@@ -43,6 +43,11 @@
       color: #fff;
       cursor: pointer;
     }
+    .controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+    }
     button:hover {
       background: #333;
     }
@@ -56,7 +61,10 @@
   <main>
     <p id="line" aria-live="polite"></p>
     <p id="counter"></p>
-    <button id="next" type="button">Next</button>
+    <div class="controls">
+      <button id="previous" type="button">Previous</button>
+      <button id="next" type="button">Next</button>
+    </div>
   </main>
 
   <script>
@@ -81,6 +89,7 @@ So long lives this, and this gives life to thee.`;
 
     const lineEl = document.getElementById("line");
     const counterEl = document.getElementById("counter");
+    const previousBtn = document.getElementById("previous");
     const nextBtn = document.getElementById("next");
 
     function render() {
@@ -90,6 +99,12 @@ So long lives this, and this gives life to thee.`;
 
     nextBtn.addEventListener("click", () => {
       index = (index + 1) % lines.length;
+      render();
+    });
+
+    // Previous on the first line wraps around to the last line.
+    previousBtn.addEventListener("click", () => {
+      index = (index - 1 + lines.length) % lines.length;
       render();
     });
 
